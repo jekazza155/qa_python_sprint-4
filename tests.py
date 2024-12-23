@@ -1,4 +1,6 @@
 import pytest
+
+from conftest import collection
 from main import BooksCollector
 
 class TestBooksCollector:
@@ -112,4 +114,40 @@ class TestBooksCollector:
         collection.add_book_in_favorites(first_book)
         collection.delete_book_from_favorites(first_book)
         assert len(collection.get_list_of_favorites_books()) == 0
+
+    #Вывод жанра книги по ее названию
+
+    def test_get_book_genre_get_genre(self):
+        collection = BooksCollector()
+        collection.add_new_book('Туман')
+        collection.set_book_genre('Туман', 'Ужасы')
+        assert collection.get_book_genre('Туман') == 'Ужасы'
+
+    #Получения словаря
+
+    def test_get_books_genre(self, collection_five_books):
+        expected_genres = {
+            'Гарри Поттер': 'Фантастика',
+            'Король Лев': 'Мультфильмы',
+            'Кот Саймона': 'Комедии',
+            'Туман': 'Ужасы',
+            'Просто умереть': 'Детективы'
+        }
+        actual_genres = collection_five_books.get_books_genre()
+        assert actual_genres == expected_genres
+
+    def test_get_list_of_favorites_books_get_list(self, collection):
+        first_book = 'Рыба меч'
+        second_book = 'Сердце ангела'
+        collection.add_new_book(first_book)
+        collection.add_new_book(second_book)
+        collection.add_book_in_favorites(first_book)
+        collection.add_book_in_favorites(second_book)
+        favorites = collection.get_list_of_favorites_books()
+        assert len(favorites) == 2
+        assert first_book in favorites
+        assert second_book in favorites
+
+
+
 

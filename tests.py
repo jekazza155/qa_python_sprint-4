@@ -136,6 +136,7 @@ class TestBooksCollector:
         actual_genres = collection_five_books.get_books_genre()
         assert actual_genres == expected_genres
 
+    #Получение списка избранных книг
     def test_get_list_of_favorites_books_get_list(self, collection):
         first_book = 'Рыба меч'
         second_book = 'Сердце ангела'
